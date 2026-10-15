@@ -1,0 +1,3 @@
+build an website that tracks what main updates are happening around the globe, bring new ideas to put on the website, showcase execlence about the website make the theme futuristic and present a slogan that immediatly attracts people.
+
+This conversation belongs to a Grok project. The project's files are mounted at `/workspace/artifacts` — look there for user-provided sources before concluding the workspace has no project files. Files written there persist to the project across conversations.

@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --color-bg: #05070c;
+  --color-navy: #0b1220;
+  --color-navy-2: #121b2e;
+  --color-ink: #070b14;
+  --color-fg: #eef3fb;
+  --color-muted: #93a0b8;
+  --color-faint: #66758f;
+  --color-line: #1c2942;
+  --color-cyan: #3ee0ff;
+  --color-blue: #5b7cff;
+  --color-violet: #9b8cff;
+  --color-live: #ff5c73;
+  --color-up: #3ee0c5;
+  --color-down: #ff8b6a;
+  --radius-card: 1.15rem;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-cyan) 35%, transparent);
+    color: var(--color-fg);
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+.grid-fade {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--color-cyan) 10%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-cyan) 10%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at 50% 40%, black 15%, transparent 72%);
+}
+
+.ambient {
+  background:
+    radial-gradient(900px 480px at 80% 10%, color-mix(in oklab, var(--color-blue) 22%, transparent), transparent 60%),
+    radial-gradient(700px 420px at 10% 80%, color-mix(in oklab, var(--color-violet) 16%, transparent), transparent 65%),
+    radial-gradient(500px 300px at 50% 0%, color-mix(in oklab, var(--color-cyan) 10%, transparent), transparent 70%);
+}
+
+.panel {
+  background: color-mix(in oklab, var(--color-navy) 82%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-cyan) 16%, var(--color-line));
+  border-radius: var(--radius-card);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-ink) 40%, transparent),
+    0 20px 50px color-mix(in oklab, black 35%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.panel-hover {
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.panel-hover:hover {
+  border-color: color-mix(in oklab, var(--color-cyan) 48%, var(--color-line));
+  transform: translateY(-2px);
+}
+
+.kicker {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-cyan);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: orbital-marquee 70s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes orbital-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes orbital-pulse {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+.live-ping {
+  position: relative;
+}
+
+.live-ping::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--color-live);
+  animation: orbital-pulse 1.8s ease-out infinite;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise-in 0.55s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee-track,
+  .live-ping::after,
+  .rise {
+    animation: none;
+  }
+  .panel-hover:hover {
+    transform: none;
+  }
+}
